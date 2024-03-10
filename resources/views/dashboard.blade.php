@@ -13,5 +13,7 @@
                 </div>
             </div>
         </div>
+
+        <a href='/details'>Details</a>
     </div>
 </x-app-layout>
