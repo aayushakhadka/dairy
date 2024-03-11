@@ -17,7 +17,7 @@ class PaymentController extends Controller
         $payments = Payment::orderBy('id', 'asc');
 
         if ($request->query('order')) {
-            $payments = $payments->where('category_id', $request->query('category'));
+            $payments = $payments->where('order_id', $request->query('order'));
         }
 
 
@@ -33,7 +33,8 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        return view('/payments/create');
+        $orders = Order::all();
+        return view('payments.create', compact('orders'));
     }
 
     /**
@@ -41,8 +42,8 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        Payment::create($request->except('user_id') + [
-            'user_id' => Auth::id()
+        Payment::create($request->except('order_id') + [
+            'order_id' => Auth::id()
         ]);
     }
 
@@ -57,7 +58,8 @@ class PaymentController extends Controller
     public function edit($id)
     {
         $payment = Payment::find($id);
-        return view('payments.edit', compact('payment'));
+        $orders = Order::all();
+        return view('payments.edit', compact('payment', 'orders'));
     }
 
     /**

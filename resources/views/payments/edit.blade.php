@@ -6,7 +6,9 @@
     <input type='text' name="name" placeholder='name' value="{{$payment->amount}}" />
     
     <select name="order_id" id="">
-      
+        @foreach($order as order)
+        <option value="{{$order->id}}" selected="{{ $order->id == $payment->payment_id}}">{{ $order->type}}</option>
+        @endforeach
     </select>
     <button>edit</button>
 
