@@ -10,5 +10,5 @@
     <input type='text' name="type" placeholder="type" />
     <input type='text' name="price" placeholder="price" />
 
-<button type="submit">Edit</button>
+<!-- <button type="submit">Edit</button> -->
 </form>

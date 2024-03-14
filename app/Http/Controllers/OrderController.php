@@ -10,8 +10,9 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('user_id', Auth::id())->get();
-        return view('orders.index', compact('orders'));
+        
+$orders=Order::all();
+return view('orders.index',['orders'=>$orders]);
     }
 
     /**
@@ -27,9 +28,10 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        Order::create($request->except('user_id') + [
-       'user_id' => Auth::id()
-        ]);
+        
+        Order::create($request->all());
+        return redirect('/payments/create')->with('success','Order Submitted successfully');
+
     }
 
     /**

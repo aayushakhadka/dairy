@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Payment;
+use App\Traits\FileStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
+
+    use FileStorage;
     public function index(Request $request)
     {
         $payments = Payment::orderBy('id', 'asc');
@@ -39,9 +42,18 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::id()){
+            Payment::create($request->all());
+            return redirect("/");
+        }
         Payment::create($request->except('order_id') + [
             'order_id' => Auth::id()
         ]);
+
+        Payment::create($request->except('photo') + [
+            'photo' => $this->storeFile('uploads/payments', $request->file('photo'))
+        ]);
+        return redirect("/");
     }
 
     /**
@@ -77,5 +89,7 @@ class PaymentController extends Controller
         $payment->delete();
         return redirect('/payments');
     }
+
+    
 }
 

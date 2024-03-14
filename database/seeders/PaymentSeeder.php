@@ -14,8 +14,11 @@ class PaymentSeeder extends Seeder
     public function run(): void
     {
         Payment::create([
+           'name'=>'admin',
+           'phone'=>'1234567887',
             'amount'=>300,
             'remarks'=>'cow milk',
+            'type'=>'cow milk',
              'order_id'=>'1'
         ]); 
     }
